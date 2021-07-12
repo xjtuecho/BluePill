@@ -1,0 +1,37 @@
+   111: { 
+   112:     uint32_t count32b = 0U, i = 0U; 
+0x0800121C B510      PUSH          {r4,lr}
+   113:     __IO uint32_t *fifo = USB_FIFO(chep_num); 
+   114:  
+0x0800121E 4C07      LDR           r4,[pc,#28]  ; @0x0800123C
+   112:     uint32_t count32b = 0U, i = 0U; 
+   113:     __IO uint32_t *fifo = USB_FIFO(chep_num); 
+   114:  
+0x08001220 2300      MOVS          r3,#0x00
+0x08001222 1CD2      ADDS          r2,r2,#3
+0x08001224 EB043101  ADD           r1,r4,r1,LSL #12
+   115:     count32b = (len + 3U) / 4U; 
+   116:  
+   117:     /* write data cyclically */ 
+   118:     for (i = 0U; i < count32b; i++) { 
+0x08001228 0892      LSRS          r2,r2,#2
+0x0800122A E003      B             0x08001234
+   119:         *fifo = *((__packed uint32_t *)src); 
+   120:  
+   121:         src += 4U; 
+   122:     } 
+   123:  
+0x0800122C F8504B04  LDR           r4,[r0],#0x04
+0x08001230 600C      STR           r4,[r1,#0x00]
+0x08001232 1C5B      ADDS          r3,r3,#1
+   118:     for (i = 0U; i < count32b; i++) { 
+   119:         *fifo = *((__packed uint32_t *)src); 
+   120:  
+   121:         src += 4U; 
+   122:     } 
+   123:  
+0x08001234 4293      CMP           r3,r2
+0x08001236 D3F9      BCC           0x0800122C
+   124:     return USB_OK; 
+0x08001238 2000      MOVS          r0,#0x00
+   125: } 

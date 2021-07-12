@@ -1,0 +1,46 @@
+Index: usb_core.c
+===================================================================
+--- usb_core.c	(revision 7727)
++++ usb_core.c	(working copy)
+@@ -109,7 +109,7 @@
+ */
+ usb_status_enum usb_fifo_write (uint8_t *src, uint8_t chep_num, uint16_t len)
+ {
+-    uint32_t count32b = 0U, i = 0U;
++    uint32_t count32b = 0U, i = 0U, dat32b = 0U;
+     __IO uint32_t *fifo = USB_FIFO(chep_num);
+ 
+     count32b = (len + 3U) / 4U;
+@@ -116,7 +116,8 @@
+ 
+     /* write data cyclically */
+     for (i = 0U; i < count32b; i++) {
+-        *fifo = *((__packed uint32_t *)src);
++        dat32b = (src[0]<<0) | (src[1]<<8) | (src[2]<<16) | (src[3]<<24);
++        *fifo  = dat32b;
+ 
+         src += 4U;
+     }
+@@ -133,7 +134,7 @@
+ */
+ void *usb_fifo_read (uint8_t *dest, uint16_t len)
+ {
+-    uint32_t i = 0U;
++    uint32_t i = 0U, dat32b = 0U;
+     uint32_t count32b = (len + 3U) / 4U;
+ 
+     __IO uint32_t *fifo = USB_FIFO(0U);
+@@ -140,8 +141,11 @@
+ 
+     /* read data cyclically */
+     for (i = 0U; i < count32b; i++) {
+-        *(__packed uint32_t *)dest = *fifo;
+-        
++        dat32b  = *fifo;
++        dest[0] = (dat32b>>0)  & 0xFF;
++        dest[1] = (dat32b>>8)  & 0xFF;
++        dest[2] = (dat32b>>16) & 0xFF;
++        dest[3] = (dat32b>>24) & 0xFF;
+         dest += 4U;
+     }
+ 
