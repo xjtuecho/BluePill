@@ -223,7 +223,7 @@ typedef struct
     exmc_nand_pccard_timing_parameter_struct*  common_space_timing;     /*!< the timing parameters for NAND flash common space */
     exmc_nand_pccard_timing_parameter_struct*  attribute_space_timing;  /*!< the timing parameters for NAND flash attribute space */  
     exmc_nand_pccard_timing_parameter_struct*  io_space_timing;         /*!< the timing parameters for NAND flash IO space */
-}exmc_pccard_parameter_struct;;
+}exmc_pccard_parameter_struct;
 
 /* EXMC register address */
 #define EXMC_SNCTL(region)                REG32(EXMC + 0x08U * (region))                  /*!< EXMC SRAM/NOR flash control register */

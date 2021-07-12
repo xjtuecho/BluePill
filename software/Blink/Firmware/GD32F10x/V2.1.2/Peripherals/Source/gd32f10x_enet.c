@@ -40,6 +40,18 @@ OF SUCH DAMAGE.
 
 #ifdef GD32F10X_CL
 
+/* initialize ENET peripheral with generally concerned parameters, call it by enet_init() */
+static void enet_default_init(void);
+#ifdef USE_DELAY
+/* user can provide more timing precise _ENET_DELAY_ function */
+#define _ENET_DELAY_                              delay_ms 
+#else
+/* insert a delay time */
+static void enet_delay(uint32_t ncount);
+/* default _ENET_DELAY_ function with less precise timing */
+#define _ENET_DELAY_                              enet_delay
+#endif
+
 #if defined   (__CC_ARM)                                    /*!< ARM compiler */
 __align(4) 
 enet_descriptors_struct  rxdesc_tab[ENET_RXBUF_NUM];        /*!< ENET RxDMA descriptor */

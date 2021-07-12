@@ -57,10 +57,10 @@ OF SUCH DAMAGE.
 #include "gd32f10x_usart.h"
 #include "gd32f10x_i2c.h"
 #include "gd32f10x_spi.h"
-//#include "gd32f10x_sdio.h"
-//#include "gd32f10x_exmc.h"
-//#include "gd32f10x_can.h"
-//#include "gd32f10x_enet.h"
+#include "gd32f10x_sdio.h"
+#include "gd32f10x_exmc.h"
+#include "gd32f10x_can.h"
+#include "gd32f10x_enet.h"
 #include "gd32f10x_misc.h"
 
 #endif /* GD32F10X_LIBOPT_H */
