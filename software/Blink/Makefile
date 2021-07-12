@@ -19,9 +19,9 @@ src/main.c \
 src/HAL.c \
 gd32f10x/gd32f10x_it.c \
 gd32f10x/system_gd32f10x.c \
-Firmware/GD32F10x/V2.1.2/Peripherals/Source/gd32f10x_rcu.c \
-Firmware/GD32F10x/V2.1.2/Peripherals/Source/gd32f10x_gpio.c \
-Firmware/GD32F10x/V2.1.2/Peripherals/Source/gd32f10x_misc.c \
+../Firmware/GD32F10x/V2.1.2/Peripherals/Source/gd32f10x_rcu.c \
+../Firmware/GD32F10x/V2.1.2/Peripherals/Source/gd32f10x_gpio.c \
+../Firmware/GD32F10x/V2.1.2/Peripherals/Source/gd32f10x_misc.c \
 
 # ASM sources
 ASM_SOURCES =  \
@@ -82,9 +82,9 @@ AS_INCLUDES =
 C_INCLUDES =  \
 -Isrc \
 -Igd32f10x \
--IFirmware/GD32F10x/V2.1.2/Include \
--IFirmware/GD32F10x/V2.1.2/Peripherals/Include \
--IFirmware/CMSIS/5.6.0/Include \
+-I../Firmware/GD32F10x/V2.1.2/Include \
+-I../Firmware/GD32F10x/V2.1.2/Peripherals/Include \
+-I../Firmware/CMSIS/5.6.0/Include \
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fno-common -fdata-sections -ffunction-sections
