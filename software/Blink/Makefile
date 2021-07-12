@@ -8,7 +8,7 @@ TARGET = Blink_$(BOARD)
 # paths
 #######################################
 # Build path
-BUILD_DIR = build-$(BOARD)
+BUILD_DIR = build_$(BOARD)
 
 ######################################
 # source
@@ -56,9 +56,10 @@ CPU = -mcpu=cortex-m3
 
 # fpu
 # NONE for Cortex-M0/M0+/M3
+FPU =
 
 # float-abi
-
+FLOAT-ABI =
 
 # mcu
 MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
@@ -91,7 +92,7 @@ ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fno-common -fdata-secti
 CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wpedantic -Wextra -fno-common -fdata-sections -ffunction-sections -std=c99 $(BOARD_FLAGS)
 
 ifeq ($(DEBUG), 1)
-CFLAGS += -g -gdwarf-2
+	CFLAGS += -g -gdwarf-2
 endif
 
 
@@ -103,7 +104,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = GD32F103C8Tx_FLASH.ld
+LDSCRIPT = gd32f10x/GD32F103C8Tx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys
