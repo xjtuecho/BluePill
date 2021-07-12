@@ -22,3 +22,7 @@ The PCB was created by [LCEDA](https://lceda.cn/), which is the domestic version
 The hardware repo was hosted on [OSHWHub](https://oshwhub.com/spadger/bluepill), and a released version of the repo was stored in [hardware](./hardware) directory.
 
 A simple `Blink` example was stored in [software](./software) directory, you can consider it as a GCC project template.
+
+![Top Layer](./image/01_BluePill_TL.jpg)
+
+![Bottom Layer](./image/02_BluePill_BL.jpg)
