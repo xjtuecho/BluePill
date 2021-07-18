@@ -1,37 +1,21 @@
-######################################
-# target
-######################################
 TARGET = Blink_$(BOARD)
-
-
-#######################################
-# paths
-#######################################
-# Build path
 BUILD_DIR = build_$(BOARD)
 
-######################################
-# source
-######################################
 # C sources
 C_SOURCES =  \
-src/main.c \
-src/HAL.c \
-at32f4xx/at32f4xx_it.c \
-at32f4xx/system_at32f4xx.c \
-../Firmware/AT32/AT32F4xx_StdPeriph_Driver/src/at32f4xx_rcc.c \
-../Firmware/AT32/AT32F4xx_StdPeriph_Driver/src/at32f4xx_gpio.c \
-../Firmware/AT32/AT32F4xx_StdPeriph_Driver/src/at32f4xx_gpio_ex.c \
-../Firmware/AT32/AT32F4xx_StdPeriph_Driver/src/misc.c \
+HAL.c \
+at32f4xx_it.c \
+system_at32f4xx.c \
+../src/main.c \
+../../Firmware/AT32/AT32F4xx_StdPeriph_Driver/src/at32f4xx_rcc.c \
+../../Firmware/AT32/AT32F4xx_StdPeriph_Driver/src/at32f4xx_gpio.c \
+../../Firmware/AT32/AT32F4xx_StdPeriph_Driver/src/at32f4xx_gpio_ex.c \
+../../Firmware/AT32/AT32F4xx_StdPeriph_Driver/src/misc.c \
 
 # ASM sources
 ASM_SOURCES =  \
-at32f4xx/startup_at32f421c8t7.s
+startup_at32f421c8t7.s
 
-
-#######################################
-# binaries
-#######################################
 PREFIX = arm-none-eabi-
 # The gcc compiler bin path can be either defined in make command via GCC_PATH variable (> make GCC_PATH=xxx)
 # either it can be added to the PATH environment variable.
@@ -49,21 +33,8 @@ endif
 HEX = $(CP) -O ihex
 BIN = $(CP) -O binary -S
 
-#######################################
-# CFLAGS
-#######################################
-# cpu
-CPU = -mcpu=cortex-m4
-
-# fpu
-# NONE for Cortex-M0/M0+/M3
-FPU =
-
-# float-abi
-FLOAT-ABI =
-
 # mcu
-MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
+MCU = -mcpu=cortex-m4 -mthumb
 
 # macros for gcc
 # AS defines
@@ -81,11 +52,11 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
--Isrc \
--Iat32f4xx \
--I../Firmware/AT32/AT32F4xx_StdPeriph_Driver/inc \
--I../Firmware/AT32/CMSIS/CM4/CoreSupport \
--I../Firmware/AT32/CMSIS/CM4/DeviceSupport \
+-I. \
+-I../src \
+-I../../Firmware/AT32/AT32F4xx_StdPeriph_Driver/inc \
+-I../../Firmware/AT32/CMSIS/CM4/CoreSupport \
+-I../../Firmware/AT32/CMSIS/CM4/DeviceSupport \
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fno-common -fdata-sections -ffunction-sections
@@ -96,16 +67,11 @@ ifeq ($(DEBUG), 1)
 	CFLAGS += -g -gdwarf-2
 endif
 
-
 # Generate dependency information
 CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
-
-#######################################
-# LDFLAGS
-#######################################
 # link script
-LDSCRIPT = at32f4xx/AT32F421x8_FLASH.ld
+LDSCRIPT = AT32F421x8_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys
@@ -120,9 +86,6 @@ all: Blink
 Blink:
 	$(MAKE) BOARD=BluePill DEBUG=0 OPT=-Os elf hex bin
 
-#######################################
-# build the application
-#######################################
 # list of objects
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
@@ -159,18 +122,10 @@ elf: $(ELF_TARGET)
 
 hex: $(HEX_TARGET)
 
-#######################################
-# clean up
-#######################################
 clean:
 	-rm -fR $(BUILD_DIR)*
 
 clean_obj:
 	-rm -f $(BUILD_DIR)*/*.o $(BUILD_DIR)*/*.d $(BUILD_DIR)*/*.lst
 
-#######################################
-# dependencies
-#######################################
 -include $(wildcard $(BUILD_DIR)/*.d)
-
-# *** EOF ***
