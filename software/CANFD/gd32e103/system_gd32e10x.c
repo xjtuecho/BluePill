@@ -46,7 +46,7 @@ OF SUCH DAMAGE.
      Internal SRAM. */
 /* #define VECT_TAB_SRAM */
 /* Vector Table base offset  must be a multiple of 0x200 */
-#define VECT_TAB_OFFSET  0x2000
+#define VECT_TAB_OFFSET  0x0000
 
 /* select a system clock by uncommenting the following line */
 /* use IRC8M */
