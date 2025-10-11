@@ -1,6 +1,15 @@
+# BluePill027
+
+## BluePill027 PINOUT
+
+![BluePill027 Schematic](./BluePill027_v25.6.20.pdf)
+
 ![BluePill027 PINOUT](./BluePill027_v25.6.20_PINOUT.png)
 
+## serial_flash_programmer help information
+
 ```
+serial_flash_programmer
 C2000 Serial Firmware Upgrader v25.7.22
 Copyright (c) 2025 Texas Instruments & ECHO Studio.  All rights reserved.
 This application may be used to download images to a Texas Instruments
@@ -27,4 +36,28 @@ Application files can be intel hex or TI sci8 binary boot format. These can
 be generated using the hex2000 utility. An example of how to do this follows:
 hex2000 application.out --romwidth 16 --intel  -o application.hex
 hex2000 application.out --sci8 --boot --binary -o application.bin
+```
+
+## hex firmware download example on BluePill027 with serial_flash_programmer
+
+```
+serial_flash_programmer -p COM3 -d f2802x -f .\XBOOT_28027.hex
+C2000 Serial Firmware Upgrader v25.7.22
+Copyright (c) 2025 Texas Instruments & ECHO Studio.  All rights reserved.
+getting comm state
+building comm DCB
+adjusting port settings
+calling f05_DownloadImage
+Kernel AutoBaud Successful!
+Downloading f2802x_flash_kernel to device...
+--------------------
+Kernel Loaded.
+Done Waiting for kernel boot...
+Attempting autobaud...
+Application AutoBaud Successful
+Downloading App File .\XBOOT_28027.hex to device...
+Checksum passed. EntryAddr=0x003F7FF6
+--------------------------------
+This is the last record, download successful
+Application Load Successful
 ```
